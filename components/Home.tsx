@@ -7,6 +7,10 @@ import Customers from './Customers';
 import ScrollAnimation from './ScrollAnimation';
 
 const Home: React.FC = () => {
+  const scrollToCollections = () => {
+    document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <main className="flex-grow">
       {/* Hero Section */}
@@ -27,7 +31,10 @@ const Home: React.FC = () => {
                 </p>
               </div>
               <div className="flex justify-center mt-6">
-                <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base hover:opacity-90 transition-opacity">
+                <button 
+                  onClick={scrollToCollections}
+                  className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base hover:opacity-90 transition-opacity"
+                >
                   <span className="truncate">Explore Our Collection</span>
                 </button>
               </div>
@@ -37,7 +44,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Curated Collections / Featured Fabrics */}
-      <section className="px-4 py-16 sm:px-10">
+      <section className="px-4 py-16 sm:px-10" id="collections">
         <ScrollAnimation>
           <h2 className="text-[32px] font-bold leading-tight tracking-[-0.015em] pb-8 font-serif">Our Curated Collections</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -109,9 +116,12 @@ const Home: React.FC = () => {
                 For decades, we have been the trusted partner for designers seeking unparalleled textile excellence. We are dedicated to sourcing exceptional, often bespoke, textiles from around the globe, blending timeless tradition with cutting-edge innovation. Our mission is to provide you with unique fabrics and a service that empowers your creative vision, sustainably building the future of fashion, one exquisite thread at a time.
               </p>
             </div>
-            <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary/10 hover:bg-primary/20 text-primary dark:text-primary text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base w-fit transition-colors">
+            <a 
+              href="#/about"
+              className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary/10 hover:bg-primary/20 text-primary dark:text-primary text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base w-fit transition-colors no-underline"
+            >
               <span className="truncate">Discover Our Story</span>
-            </button>
+            </a>
           </div>
         </ScrollAnimation>
       </section>

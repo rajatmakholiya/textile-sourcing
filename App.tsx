@@ -6,9 +6,9 @@ import About from './components/About';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState<'home' | 'about'>('home');
+  const [route, setRoute] = useState<string>('home');
 
-  // Initialize theme based on system preference or default
+  // Initialize theme based on system preference
   useEffect(() => {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setIsDarkMode(true);
@@ -27,13 +27,33 @@ function App() {
     }
   }, [isDarkMode]);
 
+  // Handle Routing
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      // Simple routing logic
+      if (hash === '#/about') {
+        setRoute('about');
+        window.scrollTo(0, 0);
+      } else {
+        setRoute('home');
+        // Only scroll to top if we are strictly navigating to home root
+        // avoiding scroll reset on anchor links if we add them later
+        if (hash === '#/' || hash === '') {
+          window.scrollTo(0, 0);
+        }
+      }
+    };
+
+    // Set initial route
+    handleHashChange();
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   const toggleTheme = () => {
     setIsDarkMode((prev) => !prev);
-  };
-
-  const handleNavigate = (page: 'home' | 'about') => {
-    setCurrentPage(page);
-    window.scrollTo(0, 0);
   };
 
   return (
@@ -44,10 +64,10 @@ function App() {
             <Header 
               isDarkMode={isDarkMode} 
               toggleTheme={toggleTheme} 
-              onNavigate={handleNavigate}
+              currentRoute={route}
             />
             
-            {currentPage === 'home' ? <Home /> : <About />}
+            {route === 'home' ? <Home /> : <About />}
             
             <Footer />
           </div>

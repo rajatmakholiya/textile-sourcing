@@ -4,15 +4,15 @@ import { Sun, Moon } from 'lucide-react';
 interface HeaderProps {
   isDarkMode: boolean;
   toggleTheme: () => void;
-  onNavigate: (page: 'home' | 'about') => void;
+  currentRoute: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleTheme, onNavigate }) => {
+const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleTheme, currentRoute }) => {
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-10 py-3 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm transition-colors duration-300">
-      <div 
-        className="flex items-center gap-4 cursor-pointer"
-        onClick={() => onNavigate('home')}
+      <a 
+        href="#/"
+        className="flex items-center gap-4 cursor-pointer hover:opacity-80 transition-opacity text-text-light dark:text-text-dark"
       >
         <div className="size-6 text-primary">
           <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -20,22 +20,34 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleTheme, onNavigate }) 
           </svg>
         </div>
         <h2 className="text-xl font-bold leading-tight tracking-[-0.015em] font-serif">Textile Sourcing</h2>
-      </div>
+      </a>
       
       <div className="flex flex-1 justify-end items-center gap-4 sm:gap-8">
         <div className="hidden md:flex items-center gap-9">
-          <button onClick={() => onNavigate('home')} className="text-sm font-medium leading-normal hover:text-primary transition-colors bg-transparent border-none cursor-pointer text-text-light dark:text-text-dark">Home</button>
-          <button onClick={() => onNavigate('about')} className="text-sm font-medium leading-normal hover:text-primary transition-colors bg-transparent border-none cursor-pointer text-text-light dark:text-text-dark">Partners</button>
-          <button onClick={() => onNavigate('about')} className="text-sm font-medium leading-normal hover:text-primary transition-colors bg-transparent border-none cursor-pointer text-text-light dark:text-text-dark">About Us</button>
+          <a 
+            href="#/" 
+            className={`text-sm font-medium leading-normal transition-colors ${currentRoute === 'home' ? 'text-primary' : 'text-text-light dark:text-text-dark hover:text-primary'}`}
+          >
+            Home
+          </a>
+          <a 
+            href="#/about" 
+            className={`text-sm font-medium leading-normal transition-colors ${currentRoute === 'about' ? 'text-primary' : 'text-text-light dark:text-text-dark hover:text-primary'}`}
+          >
+            About Us
+          </a>
         </div>
         
-        <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
+        <a 
+          href="#/about"
+          className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity no-underline"
+        >
           <span className="truncate">Get a Quote</span>
-        </button>
+        </a>
 
         <button 
           onClick={toggleTheme} 
-          className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+          className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
           aria-label="Toggle theme"
         >
           {isDarkMode ? <Sun size={20} className="text-subtle-dark" /> : <Moon size={20} className="text-subtle-light" />}
